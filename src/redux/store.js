@@ -1,19 +1,32 @@
-import { combineReducers, createStore } from 'redux';
-import { devToolsEnhancer } from '@redux-devtools/extension';
+import { configureStore } from '@reduxjs/toolkit';
 import { contactsInitState } from './contacts/contacts.init-state';
-import { contactReducer } from './contacts/contacts.reduser';
 
-const enhancer = devToolsEnhancer();
+import {
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import { contactReducer } from './contacts/contacts.slice';
+
 const initState = {
   contacts: contactsInitState,
 };
 
-const rootReducer = combineReducers({
-  contacts: contactReducer,
+export const store = configureStore({
+  preloadedState: initState,
+  reducer: { contacts: contactReducer },
+  devTools: true,
+
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-export const store = createStore(rootReducer, initState, enhancer);
-//
-//
-//
-//
+export const persistor = persistStore(store);

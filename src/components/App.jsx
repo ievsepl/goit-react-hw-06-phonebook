@@ -1,44 +1,30 @@
-// import React, { useState, useEffect, useMemo } from 'react';
 import React, { useMemo } from 'react';
-
-import { PropTypes } from 'prop-types';
+import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from 'react-redux';
+import { PropTypes } from 'prop-types';
 
 import Box from './Box/Box';
-import { nanoid } from 'nanoid';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
-// import { FILTER } from 'redux/contacts/contacts.types';
 import {
-  contactsFilterAction,
-  contactsDeleteAction,
-  contactsAddAction,
-} from 'redux/contacts/contacts.actions';
-// import { ADD_CONTACT,DELETE_CONTACT } from 'redux/contacts/contacts.types';
+  filterContactAction,
+  addContactAction,
+  delContactAction,
+} from 'redux/contacts/contacts.slice';
 
 export const App = () => {
-  const contacts = useSelector(state => {
-    // ===========ЗАПИС В ЛОКАЛ СТОРЕДЖ==================================
-    // return (
-    //   JSON.parse(localStorage.getItem('contacts')) ?? state.contacts.contacts
-    // );
-    // ======================================================================
-    return state.contacts.contacts;
-  });
-
+  const contacts = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.contacts.filter);
   const dispatch = useDispatch();
 
   const onSubmitForm = data => {
     data.id = nanoid();
-    // setContacts(prev => [...prev, data]);
-    dispatch(contactsAddAction(data));
+    dispatch(addContactAction(data));
   };
 
   const onFilterForm = e => {
-    // setFilter(e.currentTarget.value);
-    dispatch(contactsFilterAction(e.currentTarget.value));
+    dispatch(filterContactAction(e.currentTarget.value));
   };
 
   const visibleNamesMethod = useMemo(() => {
@@ -48,19 +34,8 @@ export const App = () => {
   }, [contacts, filter]);
 
   const deleteContact = contactId => {
-    // setContacts(prevState =>
-    //   prevState.filter(contact => contact.id !== contactId)
-    // );
-    dispatch(contactsDeleteAction(contactId));
+    dispatch(delContactAction(contactId));
   };
-  //
-  // ===========ЗАПИС В ЛОКАЛ СТОРЕДЖ==================================
-  //
-  // useEffect(() => {
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
-  //
-  // =================================================================
 
   const visibleNames = visibleNamesMethod;
 
@@ -78,11 +53,7 @@ export const App = () => {
       <ContactForm onSubmit={onSubmitForm} contacts={contacts} />
       <h2>Contacts</h2>
       <Filter filter={filter} onFilter={onFilterForm} />
-      <ContactList
-        contacts={visibleNames}
-        // filter={visibleNames}
-        deleteContact={deleteContact}
-      />
+      <ContactList contacts={visibleNames} deleteContact={deleteContact} />
     </Box>
   );
 };
