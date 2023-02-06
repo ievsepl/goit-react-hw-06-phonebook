@@ -1,16 +1,16 @@
-import { useSelector, useDispatch } from "react-redux";
-import { filterContactAction } from "redux/filter/filter.slice";
+import { useSelector, useDispatch } from 'react-redux';
+import { filterContactAction } from 'redux/filter/filter.slice';
 
 // import Box from '../Box/Box';
-import { PropTypes } from "prop-types";
+import { PropTypes } from 'prop-types';
 
 const Filter = () => {
-  const filter = useSelector((state) => state.filter.filter);
+  const filter = useSelector(state => state.filter.filter);
   const dispatch = useDispatch();
 
-  console.log(filter);
+  // console.log(filter);
 
-  const onFilterForm = (e) => {
+  const onFilterForm = e => {
     dispatch(filterContactAction(e.currentTarget.value));
   };
 

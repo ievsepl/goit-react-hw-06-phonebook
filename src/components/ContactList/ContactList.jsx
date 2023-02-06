@@ -1,7 +1,7 @@
 // import { PropTypes } from "prop-types";
 
 // import Box from '../Box/Box';
-import ContactItem from "../ContactItem/ContactItem";
+import ContactItem from '../ContactItem/ContactItem';
 
 const ContactList = () => {
   return (

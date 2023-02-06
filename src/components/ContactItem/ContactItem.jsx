@@ -1,23 +1,23 @@
-import { useSelector, useDispatch } from "react-redux";
-import React, { useMemo } from "react";
-import { delContactAction } from "redux/contacts/contacts.slice";
+import { useSelector, useDispatch } from 'react-redux';
+import React, { useMemo } from 'react';
+import { delContactAction } from 'redux/contacts/contacts.slice';
 
-import Box from "../Box/Box";
-import { PropTypes } from "prop-types";
+import Box from '../Box/Box';
+import { PropTypes } from 'prop-types';
 
 const ContactItem = () => {
-  const contacts = useSelector((state) => state.contacts.contacts);
-  const filter = useSelector((state) => state.filter.filter);
+  const contacts = useSelector(state => state.contacts.contacts);
+  const filter = useSelector(state => state.filter.filter);
   const dispatch = useDispatch();
-  console.log(filter, contacts);
+  // console.log(filter, contacts);
 
   const filteredNamesMethod = useMemo(() => {
-    return contacts.filter((contact) =>
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   }, [contacts, filter]);
 
-  const deleteContact = (contactId) => {
+  const deleteContact = contactId => {
     dispatch(delContactAction(contactId));
   };
 

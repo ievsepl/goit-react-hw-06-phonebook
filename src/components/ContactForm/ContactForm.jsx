@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { PropTypes } from "prop-types";
-import { nanoid } from "nanoid";
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { PropTypes } from 'prop-types';
+import { nanoid } from 'nanoid';
 
-import Box from "../Box/Box";
-import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { addContactAction } from "redux/contacts/contacts.slice";
+import Box from '../Box/Box';
+import { ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { addContactAction } from 'redux/contacts/contacts.slice';
 
 const ContactForm = () => {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
-  const contacts = useSelector((state) => state.contacts.contacts);
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const contacts = useSelector(state => state.contacts.contacts);
   const dispatch = useDispatch();
 
-  const onSubmitForm = (e) => {
+  const onSubmitForm = e => {
     e.preventDefault();
-    if (contacts.every((contact) => contact.name !== name)) {
+    if (contacts.every(contact => contact.name !== name)) {
       const data = { name, number };
       data.id = nanoid();
       console.log(data);
@@ -48,19 +48,19 @@ const ContactForm = () => {
   //   }
   // };
 
-  const onChangeName = (e) => {
+  const onChangeName = e => {
     const { value } = e.currentTarget;
     setName(value);
   };
 
-  const onChangeNumber = (e) => {
+  const onChangeNumber = e => {
     const { value } = e.currentTarget;
     setNumber(value);
   };
 
   const reset = () => {
-    setName("");
-    setNumber("");
+    setName('');
+    setNumber('');
   };
 
   return (
